@@ -10,6 +10,7 @@
   "license": "MIT",
   "devDependencies": {
     "babelify": "^5.0.4",
+    "pushstate-server": "^1.5.0",
     "reactify": "^1.1.0"
   },
   "dependencies": {
