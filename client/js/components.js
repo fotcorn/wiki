@@ -1,15 +1,27 @@
 import React from 'react';
 
-import {FlatButton} from 'material-ui';
+import {AppCanvas, AppBar} from 'material-ui';
 
-export var Test = React.createClass({
+var WikiContent = React.createClass({
+   render() {
+       return <div>WikiContent</div>
+   }
+});
+
+var WikiEditor = React.createClass({
     render() {
-        return <div>
-            <FlatButton label="Default" />
-            <a onClick={this.eventHandler}>Hello World62</a>
-        </div>
-    },
-    eventHandler() {
-        alert('handler!');
+        return <div>WikiEditor</div>
+    }
+});
+
+export var Page = React.createClass({
+    render() {
+        return <AppCanvas predefinedLayout={1}>
+            <AppBar title="Wiki" showMenuIconButton={false} />
+            <div className="mui-app-content-canvas">
+                <WikiContent />
+                <WikiEditor />
+            </div>
+        </AppCanvas>
     }
 });
