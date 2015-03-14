@@ -24,6 +24,12 @@ export var WikiPage = React.createClass({
     }
 });
 
+export var PageNotFound = React.createClass({
+   render() {
+       return <h1>Page not found</h1>
+   }
+});
+
 export var Page = React.createClass({
     render() {
         return <AppCanvas predefinedLayout={1}>

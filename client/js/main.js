@@ -1,8 +1,8 @@
 import React from 'react';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import Router, {Route, Redirect} from 'react-router';
+import Router, {Route, Redirect, NotFoundRoute} from 'react-router';
 
-import {Page, WikiPage} from './components.js';
+import {Page, WikiPage, PageNotFound} from './components.js';
 
 injectTapEventPlugin();
 
@@ -11,6 +11,7 @@ var routes = (
     <Route handler={Page} path="/">
         <Route handler={WikiPage} path="/wiki/:page" />
         <Redirect from="/" to="/wiki/index" />
+        <NotFoundRoute handler={PageNotFound}/>
     </Route>
 );
 
