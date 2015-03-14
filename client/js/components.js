@@ -1,12 +1,12 @@
 import React from 'react';
 import {AppCanvas, AppBar} from 'material-ui';
-import {RouteHandler} from 'react-router';
-
+import {RouteHandler, State} from 'react-router';
+import $ from 'jquery';
 
 var WikiContent = React.createClass({
-   render() {
-       return <div>WikiContent</div>
-   }
+    render() {
+        return <div>{this.props.content}</div>
+    }
 });
 
 var WikiEditor = React.createClass({
@@ -16,11 +16,29 @@ var WikiEditor = React.createClass({
 });
 
 export var WikiPage = React.createClass({
+    mixins: [State],
+    getInitialState() {
+        return {text: ''};
+    },
     render() {
         return <div>
-            <WikiContent />
+            <WikiContent content={this.state.text} />
             <WikiEditor />
         </div>
+    },
+
+    componentWillReceiveProps() {
+        this.load();
+    },
+
+    componentDidMount() {
+        this.load();
+    },
+
+    load() {
+        $.get('/api/' + this.getParams().page + '.json', data => {
+            this.setState({text: data.text});
+        });
     }
 });
 
