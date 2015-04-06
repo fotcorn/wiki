@@ -2,7 +2,11 @@ import React from 'react';
 import {AppCanvas, AppBar, Paper} from 'material-ui';
 import {RouteHandler, State} from 'react-router';
 import $ from 'jquery';
-import {markdown as Markdown} from 'markdown';
+
+var md = require('markdown-it')({breaks: true})
+    .use(require('markdown-it-highlightjs'))
+    .use(require('markdown-it-checkbox'));
+
 
 var WikiContent = React.createClass({
     render() {
@@ -46,7 +50,7 @@ export var WikiPage = React.createClass({
         this.load();
     },
     update(markdown) {
-        this.setState({markdown: markdown, html: Markdown.toHTML(markdown)});
+        this.setState({markdown: markdown, html: md.render(markdown)});
     },
     load() {
         $.get('/api/pages/' + this.getParams().page + '.json', data => {
