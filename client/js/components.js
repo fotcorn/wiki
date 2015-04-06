@@ -6,7 +6,7 @@ import $ from 'jquery';
 var WikiContent = React.createClass({
     render() {
         return <Paper zDepth={1} id="text">
-            <div>{this.props.content}</div>
+            <div dangerouslySetInnerHTML={{__html:this.props.content}}></div>
         </Paper>
     }
 });
@@ -14,38 +14,41 @@ var WikiContent = React.createClass({
 var WikiEditor = React.createClass({
     render() {
         return <Paper zDepth={1} id="editor">
-            <textarea>WikiEditor</textarea>
+            <textarea onChange={this.handleChange} value={this.props.markdown}></textarea>
         </Paper>
+    },
+    handleChange(event) {
+        this.props.onChange(event.target.value)
     }
 });
 
 export var WikiPage = React.createClass({
     mixins: [State],
     getInitialState() {
-        return {text: ''};
+        return {markdown: '', html: ''};
     },
     render() {
         return <div>
             <div className="main-container">
-                <WikiContent content={this.state.text} />
+                <WikiContent content={this.state.html} />
             </div>
             <div className="main-container">
-                <WikiEditor />
+                <WikiEditor markdown={this.state.markdown} onChange={this.update}/>
             </div>
         </div>
     },
-
     componentWillReceiveProps() {
         this.load();
     },
-
     componentDidMount() {
         this.load();
     },
-
+    update(markdown) {
+        this.setState({markdown: markdown, html: markdown.replace(/\n/g, '<br>')});
+    },
     load() {
         $.get('/api/' + this.getParams().page + '.json', data => {
-            this.setState({text: data.text});
+            this.update(data.text);
         });
     }
 });
