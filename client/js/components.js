@@ -14,7 +14,7 @@ var WikiContent = React.createClass({
 var WikiEditor = React.createClass({
     render() {
         return <Paper zDepth={1} id="editor">
-            <div>WikiEditor</div>
+            <textarea>WikiEditor</textarea>
         </Paper>
     }
 });
