@@ -30,6 +30,7 @@ export var WikiPage = React.createClass({
     },
     render() {
         return <div>
+            <h1 id="page-title">{this.state.title}</h1>
             <div className="main-container">
                 <WikiContent content={this.state.html} />
             </div>
@@ -50,6 +51,7 @@ export var WikiPage = React.createClass({
     load() {
         $.get('/api/' + this.getParams().page + '.json', data => {
             this.update(data.text);
+            this.setState({title: this.getParams().page})
         });
     }
 });
