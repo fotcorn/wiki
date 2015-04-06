@@ -1,17 +1,21 @@
 import React from 'react';
-import {AppCanvas, AppBar} from 'material-ui';
+import {AppCanvas, AppBar, Paper} from 'material-ui';
 import {RouteHandler, State} from 'react-router';
 import $ from 'jquery';
 
 var WikiContent = React.createClass({
     render() {
-        return <div>{this.props.content}</div>
+        return <Paper zDepth={1} id="text">
+            <div>{this.props.content}</div>
+        </Paper>
     }
 });
 
 var WikiEditor = React.createClass({
     render() {
-        return <div>WikiEditor</div>
+        return <Paper zDepth={1} id="editor">
+            <div>WikiEditor</div>
+        </Paper>
     }
 });
 
@@ -22,8 +26,12 @@ export var WikiPage = React.createClass({
     },
     render() {
         return <div>
-            <WikiContent content={this.state.text} />
-            <WikiEditor />
+            <div className="main-container">
+                <WikiContent content={this.state.text} />
+            </div>
+            <div className="main-container">
+                <WikiEditor />
+            </div>
         </div>
     },
 
