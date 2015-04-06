@@ -2,6 +2,7 @@ import React from 'react';
 import {AppCanvas, AppBar, Paper} from 'material-ui';
 import {RouteHandler, State} from 'react-router';
 import $ from 'jquery';
+import {markdown as Markdown} from 'markdown';
 
 var WikiContent = React.createClass({
     render() {
@@ -44,7 +45,7 @@ export var WikiPage = React.createClass({
         this.load();
     },
     update(markdown) {
-        this.setState({markdown: markdown, html: markdown.replace(/\n/g, '<br>')});
+        this.setState({markdown: markdown, html: Markdown.toHTML(markdown)});
     },
     load() {
         $.get('/api/' + this.getParams().page + '.json', data => {
