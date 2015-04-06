@@ -5,7 +5,7 @@ import $ from 'jquery';
 
 var md = require('markdown-it')({breaks: true})
     .use(require('markdown-it-highlightjs'))
-    .use(require('markdown-it-checkbox'));
+    .use(require('./markdown-it-checkbox'));
 
 
 var WikiContent = React.createClass({
