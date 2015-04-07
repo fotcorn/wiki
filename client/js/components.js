@@ -53,7 +53,7 @@ export var WikiPage = React.createClass({
         this.setState({markdown: markdown, html: md.render(markdown)});
     },
     load() {
-        $.get('/api/pages/' + this.getParams().page + '.json', data => {
+        $.get('http://localhost:5000/api/pages/' + this.getParams().page + '/', data => {
             this.update(data.text);
             this.setState({title: this.getParams().page})
         });
