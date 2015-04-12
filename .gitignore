@@ -6,3 +6,5 @@ bundle.js
 TODO
 *.iml
 venv/
+*.pyc
+
