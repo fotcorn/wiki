@@ -19,6 +19,7 @@ var WikiContent = React.createClass({
 var WikiEditor = React.createClass({
     render() {
         return <Paper zDepth={1} id="editor">
+            <button onClick={this.props.onSaveClick}>Save</button>
             <textarea onChange={this.handleChange} value={this.props.markdown}></textarea>
         </Paper>
     },
@@ -39,7 +40,7 @@ export var WikiPage = React.createClass({
                 <WikiContent content={this.state.html} />
             </div>
             <div className="main-container">
-                <WikiEditor markdown={this.state.markdown} onChange={this.update}/>
+                <WikiEditor markdown={this.state.markdown} onChange={this.update} onSaveClick={this.save} />
             </div>
         </div>
     },
@@ -57,6 +58,9 @@ export var WikiPage = React.createClass({
             this.update(data.text);
             this.setState({title: this.getParams().page})
         });
+    },
+    save() {
+        $.post('http://localhost:5000/api/pages/' + this.getParams().page + '/', data=JSON.stringify({'text': this.state.markdown}));
     }
 });
 
