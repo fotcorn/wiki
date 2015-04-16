@@ -60,7 +60,12 @@ export var WikiPage = React.createClass({
         });
     },
     save() {
-        $.post('http://localhost:5000/api/pages/' + this.getParams().page + '/', data=JSON.stringify({'text': this.state.markdown}));
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost:5000/api/pages/' + this.getParams().page + '/',
+            data: JSON.stringify({'text': this.state.markdown}),
+            contentType: 'application/json'
+        });
     }
 });
 
