@@ -19,7 +19,6 @@ var WikiContent = React.createClass({
 var WikiEditor = React.createClass({
     render() {
         return <Paper zDepth={1} id="editor">
-            <button onClick={this.props.onSaveClick}>Save</button>
             <textarea onChange={this.handleChange} value={this.props.markdown}></textarea>
         </Paper>
     },
@@ -35,9 +34,9 @@ export var WikiPage = React.createClass({
     },
     render() {
         if (this.state.dirty) {
-            var dirty = <span>dirty</span>
+            var dirty = <span>unsaved changes</span>
         } else {
-            var dirty = <span>not dirty</span>
+            var dirty = <span>saved</span>
         }
         return <div>
             <h1 id="page-title">{this.state.title} - {dirty}</h1>
@@ -45,7 +44,7 @@ export var WikiPage = React.createClass({
                 <WikiContent content={this.state.html} />
             </div>
             <div className="main-container">
-                <WikiEditor markdown={this.state.markdown} onChange={this.update} onSaveClick={this.save} />
+                <WikiEditor markdown={this.state.markdown} onChange={this.update} />
             </div>
         </div>
     },
@@ -57,27 +56,32 @@ export var WikiPage = React.createClass({
         this.renderMarkdown();
     },
     load() {
-        window.setInterval(500, function() {alert('interval'); });
+        if (this.interval == null) {
+            window.setInterval(() => this.save() , 2000);
+        }
         $.get('http://localhost:5000/api/pages/' + this.getParams().page + '/', data => {
             this.setState({markdown: data.text, title: this.getParams().page, dirty: false});
             this.renderMarkdown();
         });
     },
     save() {
-        $.ajax({
-            type: 'POST',
-            url: 'http://localhost:5000/api/pages/' + this.getParams().page + '/',
-            data: JSON.stringify({'text': this.state.markdown}),
-            contentType: 'application/json'
-        });
-        this.setState({dirty: false});
+        if (this.state.dirty) {
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:5000/api/pages/' + this.getParams().page + '/',
+                data: JSON.stringify({'text': this.state.markdown}),
+                contentType: 'application/json'
+            });
+            this.setState({dirty: false});
+        }
     },
     componentWillReceiveProps() {
         this.load();
     },
     componentDidMount() {
         this.load();
-    }
+    },
+    interval: null
 });
 
 export var PageNotFound = React.createClass({
