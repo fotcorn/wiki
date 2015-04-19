@@ -31,11 +31,16 @@ var WikiEditor = React.createClass({
 export var WikiPage = React.createClass({
     mixins: [State],
     getInitialState() {
-        return {markdown: '', html: ''};
+        return {markdown: '', html: '', dirty: false};
     },
     render() {
+        if (this.state.dirty) {
+            var dirty = <span>dirty</span>
+        } else {
+            var dirty = <span>not dirty</span>
+        }
         return <div>
-            <h1 id="page-title">{this.state.title}</h1>
+            <h1 id="page-title">{this.state.title} - {dirty}</h1>
             <div className="main-container">
                 <WikiContent content={this.state.html} />
             </div>
@@ -44,19 +49,18 @@ export var WikiPage = React.createClass({
             </div>
         </div>
     },
-    componentWillReceiveProps() {
-        this.load();
-    },
-    componentDidMount() {
-        this.load();
+    renderMarkdown() {
+        this.setState({html: md.render(this.state.markdown)});
     },
     update(markdown) {
-        this.setState({markdown: markdown, html: md.render(markdown)});
+        this.setState({markdown: markdown, dirty: true});
+        this.renderMarkdown();
     },
     load() {
+        window.setInterval(500, function() {alert('interval'); });
         $.get('http://localhost:5000/api/pages/' + this.getParams().page + '/', data => {
-            this.update(data.text);
-            this.setState({title: this.getParams().page})
+            this.setState({markdown: data.text, title: this.getParams().page, dirty: false});
+            this.renderMarkdown();
         });
     },
     save() {
@@ -66,6 +70,13 @@ export var WikiPage = React.createClass({
             data: JSON.stringify({'text': this.state.markdown}),
             contentType: 'application/json'
         });
+        this.setState({dirty: false});
+    },
+    componentWillReceiveProps() {
+        this.load();
+    },
+    componentDidMount() {
+        this.load();
     }
 });
 
