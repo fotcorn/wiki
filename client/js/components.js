@@ -23,7 +23,7 @@ var WikiEditor = React.createClass({
         </Paper>
     },
     handleChange(event) {
-        this.props.onChange(event.target.value)
+        this.props.onChange(event.target.value);
     }
 });
 
@@ -48,12 +48,12 @@ export var WikiPage = React.createClass({
             </div>
         </div>
     },
-    renderMarkdown() {
-        this.setState({html: md.render(this.state.markdown)});
+    renderMarkdown(markdown) {
+        this.setState({html: md.render(markdown)});
     },
     update(markdown) {
         this.setState({markdown: markdown, dirty: true});
-        this.renderMarkdown();
+        this.renderMarkdown(markdown);
     },
     load() {
         if (this.interval == null) {
@@ -61,7 +61,7 @@ export var WikiPage = React.createClass({
         }
         $.get('http://localhost:5000/api/pages/' + this.getParams().page + '/', data => {
             this.setState({markdown: data.text, title: this.getParams().page, dirty: false});
-            this.renderMarkdown();
+            this.renderMarkdown(data.text);
         });
     },
     save() {
