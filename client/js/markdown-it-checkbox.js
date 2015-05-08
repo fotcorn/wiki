@@ -1,3 +1,6 @@
+// source: https://github.com/mcecot/markdown-it-checkbox/blob/master/index.js
+// changes: disable checkbox on line 39
+
 var _, checkboxReplace;
 
 _ = require('underscore');
