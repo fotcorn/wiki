@@ -9,7 +9,7 @@ injectTapEventPlugin();
 
 var routes = (
     <Route handler={Page} path="/">
-        <Route handler={WikiPage} path="/wiki/:page" />
+        <Route handler={WikiPage} path="/wiki/:page" name="wiki_page" />
         <Redirect from="/" to="/wiki/index" />
         <NotFoundRoute handler={PageNotFound}/>
     </Route>

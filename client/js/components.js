@@ -1,6 +1,6 @@
 import React from 'react';
 import {AppCanvas, AppBar, Paper} from 'material-ui';
-import {RouteHandler, State} from 'react-router';
+import {RouteHandler, State, Navigation} from 'react-router';
 import $ from 'jquery';
 
 var md = require('markdown-it')({breaks: true})
@@ -10,8 +10,11 @@ var md = require('markdown-it')({breaks: true})
 
 
 var WikiContent = React.createClass({
-    contextTypes: {
-        router: React.PropTypes.func
+    mixins: [Navigation],
+    componentDidMount() {
+        window.wikiTransitionToPage = (page) => {
+            this.transitionTo('wiki_page', {page: page});
+        };
     },
     render() {
         return <Paper zDepth={1} id="text">
