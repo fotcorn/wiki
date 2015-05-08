@@ -5,10 +5,14 @@ import $ from 'jquery';
 
 var md = require('markdown-it')({breaks: true})
     .use(require('markdown-it-highlightjs'))
-    .use(require('./markdown-it-checkbox'));
+    .use(require('./markdown-it-checkbox'))
+    .use(require('./markdown-it-link'));
 
 
 var WikiContent = React.createClass({
+    contextTypes: {
+        router: React.PropTypes.func
+    },
     render() {
         return <Paper zDepth={1} id="text">
             <div dangerouslySetInnerHTML={{__html:this.props.content}}></div>
