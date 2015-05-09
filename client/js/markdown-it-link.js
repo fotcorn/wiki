@@ -34,6 +34,12 @@ function linkify(state, silent) {
 
   content = state.src.slice(start + 1, state.pos);
 
+  // skip completed checkboxes [x]
+  if (content == 'x') {
+      state.pos = start;
+      return false;
+  }
+
   // don't allow unescaped spaces/newlines inside
   if (content.match(/(^|[^\\])(\\\\)*\s/)) {
     state.pos = start;
