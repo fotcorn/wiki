@@ -1,6 +1,6 @@
 import React from 'react';
 import {AppCanvas, AppBar, Paper} from 'material-ui';
-import {RouteHandler, State, Navigation} from 'react-router';
+import {RouteHandler, State, Navigation, Link} from 'react-router';
 import $ from 'jquery';
 
 var md = require('markdown-it')({breaks: true})
@@ -100,7 +100,7 @@ export var PageNotFound = React.createClass({
 export var Page = React.createClass({
     render() {
         return <AppCanvas predefinedLayout={1}>
-            <AppBar title="Wiki" showMenuIconButton={false} />
+            <AppBar title={<h1><Link to="wiki_page" params={{page: "index"}}>Wiki</Link></h1>} showMenuIconButton={false} />
             <div className="mui-app-content-canvas">
                 <RouteHandler />
             </div>
