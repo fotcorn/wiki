@@ -46,7 +46,7 @@ function linkify(state, silent) {
 
   // Earlier we checked !silent, but this implementation does not need it
   token         = state.push('link_open', 'a', 1);
-  token.attrs = [ [ 'href', '/wiki/' + content] ];
+  token.attrs = [[ 'onclick', "javascript:wikiTransitionToPage('" + content + "');return false;"], ['href', '/wiki/' + content]];
   token.markup  = '^';
 
   token         = state.push('text', '', 0);

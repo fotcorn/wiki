@@ -1,6 +1,6 @@
 import React from 'react';
 import {AppCanvas, AppBar, Paper} from 'material-ui';
-import {RouteHandler, State} from 'react-router';
+import {RouteHandler, State, Navigation, Link} from 'react-router';
 import $ from 'jquery';
 
 var md = require('markdown-it')({breaks: true})
@@ -10,8 +10,11 @@ var md = require('markdown-it')({breaks: true})
 
 
 var WikiContent = React.createClass({
-    contextTypes: {
-        router: React.PropTypes.func
+    mixins: [Navigation],
+    componentDidMount() {
+        window.wikiTransitionToPage = (page) => {
+            this.transitionTo('wiki_page', {page: page});
+        };
     },
     render() {
         return <Paper zDepth={1} id="text">
@@ -97,7 +100,7 @@ export var PageNotFound = React.createClass({
 export var Page = React.createClass({
     render() {
         return <AppCanvas predefinedLayout={1}>
-            <AppBar title="Wiki" showMenuIconButton={false} />
+            <AppBar title={<Link to="wiki_page" params={{page: "index"}} className="mui-app-bar-title">Wiki</Link>} showMenuIconButton={false} />
             <div className="mui-app-content-canvas">
                 <RouteHandler />
             </div>
