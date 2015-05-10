@@ -1,6 +1,7 @@
 import React from 'react';
 import {AppCanvas, AppBar, Paper} from 'material-ui';
 import {RouteHandler, State, Navigation, Link} from 'react-router';
+import SublimeKeyMap from 'codemirror/keymap/sublime';
 import CodeMirror from 'react-code-mirror';
 import $ from 'jquery';
 
@@ -25,9 +26,21 @@ var WikiContent = React.createClass({
 });
 
 var WikiEditor = React.createClass({
+    replaceTabWithSpaces(cm) {
+      if (cm.somethingSelected()) {
+        cm.indentSelection("add");
+      } else {
+        cm.replaceSelection(cm.getOption("indentWithTabs")? "\t":
+          Array(cm.getOption("indentUnit") + 1).join(" "), "end", "+input");
+      }
+    },
     render() {
+        let extraKeys = {
+            Tab: this.replaceTabWithSpaces,
+            'Ctrl-S': this.props.onSave
+        };
         return <Paper zDepth={1} id="editor">
-            <CodeMirror onChange={this.handleChange} value={this.props.markdown} viewportMargin={Infinity} />
+            <CodeMirror onChange={this.handleChange} value={this.props.markdown} viewportMargin={Infinity} keyMap="sublime" extraKeys={extraKeys} />
         </Paper>
     },
     handleChange(event) {
@@ -52,7 +65,7 @@ export var WikiPage = React.createClass({
                 <WikiContent content={this.state.html} />
             </div>
             <div className="main-container">
-                <WikiEditor markdown={this.state.markdown} onChange={this.update} />
+                <WikiEditor markdown={this.state.markdown} onChange={this.update} onSave={this.save} />
             </div>
         </div>
     },
