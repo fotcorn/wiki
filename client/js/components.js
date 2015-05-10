@@ -40,7 +40,8 @@ var WikiEditor = React.createClass({
     },
     render() {
         return <Paper zDepth={1} id="editor">
-            <CodeMirror onChange={this.handleChange} value={this.props.markdown} viewportMargin={Infinity} keyMap={this.keyMap} />
+            <CodeMirror onChange={this.handleChange} value={this.props.markdown} viewportMargin={Infinity}
+                keyMap={this.keyMap} extraKeys={{'Ctrl-S': this.props.onSave}} />
         </Paper>
     },
     handleChange(event) {
