@@ -5,7 +5,7 @@ import SublimeKeyMap from 'codemirror/keymap/sublime';
 import CodeMirror from 'react-code-mirror';
 import $ from 'jquery';
 
-var md = require('markdown-it')({breaks: true})
+var md = require('markdown-it')({breaks: true, linkify: true})
     .use(require('markdown-it-highlightjs'))
     .use(require('./markdown-it-checkbox'))
     .use(require('./markdown-it-link'));
