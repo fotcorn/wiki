@@ -2,7 +2,7 @@ import React from 'react';
 import {AppCanvas, AppBar, Paper} from 'material-ui';
 import {RouteHandler, State, Navigation, Link} from 'react-router';
 import SublimeKeyMap from 'codemirror/keymap/sublime';
-import CodeMirror from 'react-code-mirror';
+import CodeMirror from './codemirror';
 import $ from 'jquery';
 
 var md = require('markdown-it')({breaks: true, linkify: true})
