@@ -116,7 +116,7 @@ export var PageNotFound = React.createClass({
 
 export var Page = React.createClass({
     render() {
-        return <AppCanvas predefinedLayout={1}>
+        return <AppCanvas>
             <AppBar title={<Link to="wiki_page" params={{page: "index"}} className="mui-app-bar-title">Wiki</Link>} showMenuIconButton={false} />
             <div className="mui-app-content-canvas">
                 <RouteHandler />

@@ -15,7 +15,7 @@
 #editor {
   margin: 10px;
   .mui-paper-container {
-    padding: 10px;
+    padding: 14px 20px 20px 20px;
     .CodeMirror {
       height: auto;
     }
@@ -24,13 +24,14 @@
 
 #text {
   margin: 10px 0 10px 10px;
+  font-size: 14px;
   div {
-    padding: 10px;
+    padding: 7px 10px 10px 10px;
   }
   li {
     margin-left: 15px;
     ul {
-      margin-bottom: 0px;
+      margin-bottom: 0;
     }
   }
   pre {
@@ -79,9 +80,6 @@
     font-size: 16px;
     line-height: 22px;
   }
-  p {
-    font-size: 14px;
-  }
   a {
     color: #ff4081; //pinkA200
     text-decoration: none;
@@ -89,8 +87,24 @@
       text-decoration: underline;
     }
   }
+  p {
+    font-size: 14px;
+  }
 }
 
-.mui-app-bar-title {
-  text-decoration: none;
+.mui-app-content-canvas {
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 2px;
+}
+
+.mui-app-bar .mui-paper-container {
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 10px;
+  .mui-app-bar-title {
+    text-decoration: none;
+  }
 }
