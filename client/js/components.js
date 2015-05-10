@@ -1,6 +1,6 @@
 import React from 'react';
 import {AppCanvas, AppBar, Paper} from 'material-ui';
-import {RouteHandler, State, Navigation, Link} from 'react-router';
+import Router from 'react-router';  // {RouteHandler, State, Navigation, Link}
 import SublimeKeyMap from 'codemirror/keymap/sublime';
 import CodeMirror from './codemirror';
 import $ from 'jquery';
@@ -12,7 +12,7 @@ var md = require('markdown-it')({breaks: true, linkify: true})
 
 
 var WikiContent = React.createClass({
-    mixins: [Navigation],
+    mixins: [Router.Navigation],
     componentDidMount() {
         window.wikiTransitionToPage = (page) => {
             this.transitionTo('wiki_page', {page: page});
@@ -49,15 +49,16 @@ var WikiEditor = React.createClass({
 });
 
 export var WikiPage = React.createClass({
-    mixins: [State],
+    mixins: [Router.State],
     getInitialState() {
         return {markdown: '', html: '', dirty: false};
     },
     render() {
+        let dirty;
         if (this.state.dirty) {
-            var dirty = <span>unsaved changes</span>
+            dirty = <span>unsaved changes</span>
         } else {
-            var dirty = <span>saved</span>
+            dirty = <span>saved</span>
         }
         return <div>
             <h1 id="page-title">{this.state.title} - {dirty}</h1>
@@ -117,9 +118,9 @@ export var PageNotFound = React.createClass({
 export var Page = React.createClass({
     render() {
         return <AppCanvas>
-            <AppBar title={<Link to="wiki_page" params={{page: "index"}} className="mui-app-bar-title">Wiki</Link>} showMenuIconButton={false} />
+            <AppBar title={<Router.Link to="wiki_page" params={{page: "index"}} className="mui-app-bar-title">Wiki</Router.Link>} showMenuIconButton={false} />
             <div className="mui-app-content-canvas">
-                <RouteHandler />
+                <Router.RouteHandler />
             </div>
         </AppCanvas>
     }
