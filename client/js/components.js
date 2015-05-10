@@ -67,6 +67,9 @@ export var WikiPage = React.createClass({
             window.setInterval(() => this.save() , 2000);
         }
         $.get('http://localhost:5000/api/pages/' + this.getParams().page + '/', data => {
+            if (data.text == null) {
+                data.text = '';
+            }
             this.setState({markdown: data.text, title: this.getParams().page, dirty: false});
             this.renderMarkdown(data.text);
         });
