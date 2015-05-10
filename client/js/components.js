@@ -1,6 +1,7 @@
 import React from 'react';
 import {AppCanvas, AppBar, Paper} from 'material-ui';
 import {RouteHandler, State, Navigation, Link} from 'react-router';
+import CodeMirror from 'react-code-mirror';
 import $ from 'jquery';
 
 var md = require('markdown-it')({breaks: true})
@@ -26,7 +27,7 @@ var WikiContent = React.createClass({
 var WikiEditor = React.createClass({
     render() {
         return <Paper zDepth={1} id="editor">
-            <textarea onChange={this.handleChange} value={this.props.markdown}></textarea>
+            <CodeMirror onChange={this.handleChange} value={this.props.markdown} viewportMargin={Infinity} />
         </Paper>
     },
     handleChange(event) {
