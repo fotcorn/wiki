@@ -26,21 +26,21 @@ var WikiContent = React.createClass({
 });
 
 var WikiEditor = React.createClass({
-    replaceTabWithSpaces(cm) {
-      if (cm.somethingSelected()) {
-        cm.indentSelection("add");
-      } else {
-        cm.replaceSelection(cm.getOption("indentWithTabs")? "\t":
-          Array(cm.getOption("indentUnit") + 1).join(" "), "end", "+input");
-      }
+    keyMap: {
+        Tab: function(cm) {
+            if (cm.somethingSelected()) {
+                cm.indentSelection("add");
+            } else {
+                cm.replaceSelection(cm.getOption("indentWithTabs") ? "\t" :
+                    Array(cm.getOption("indentUnit") + 1).join(" "), "end", "+input");
+            }
+        },
+        'Ctrl-T': false,
+        fallthrough: ['sublime']
     },
     render() {
-        let extraKeys = {
-            Tab: this.replaceTabWithSpaces,
-            'Ctrl-S': this.props.onSave
-        };
         return <Paper zDepth={1} id="editor">
-            <CodeMirror onChange={this.handleChange} value={this.props.markdown} viewportMargin={Infinity} keyMap="sublime" extraKeys={extraKeys} />
+            <CodeMirror onChange={this.handleChange} value={this.props.markdown} viewportMargin={Infinity} keyMap={this.keyMap} />
         </Paper>
     },
     handleChange(event) {
