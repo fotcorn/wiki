@@ -3,6 +3,7 @@ import {AppCanvas, AppBar, Paper} from 'material-ui';
 import Router from 'react-router';  // {RouteHandler, State, Navigation, Link}
 import SublimeKeyMap from 'codemirror/keymap/sublime';
 import CodeMirror from './codemirror';
+import config from './config';
 import $ from 'jquery';
 
 var md = require('markdown-it')({breaks: true, linkify: true})
@@ -82,7 +83,7 @@ export var WikiPage = React.createClass({
         if (this.interval == null) {
             window.setInterval(() => this.save() , 2000);
         }
-        $.get('http://localhost:5000/api/pages/' + this.getParams().page + '/', data => {
+        $.get(config.apiUrl + '/pages/' + this.getParams().page + '/', data => {
             if (data.text == null) {
                 data.text = '';
             }
@@ -94,7 +95,7 @@ export var WikiPage = React.createClass({
         if (this.state.dirty) {
             $.ajax({
                 type: 'POST',
-                url: 'http://localhost:5000/api/pages/' + this.getParams().page + '/',
+                url: config.apiUrl + '/pages/' + this.getParams().page + '/',
                 data: JSON.stringify({'text': this.state.markdown}),
                 contentType: 'application/json'
             });

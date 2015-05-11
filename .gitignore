@@ -7,4 +7,4 @@ TODO
 *.iml
 venv/
 *.pyc
-
+production.js
