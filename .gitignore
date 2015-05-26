@@ -8,3 +8,5 @@ TODO
 venv/
 *.pyc
 production.js
+dist/
+
