@@ -12,9 +12,11 @@ var merge = require('merge-stream');
 
 
 gulp.task('javascript', ['clean'], function() {
+    var env = process.env;
+    env._ = 'purge';
     return browserify('./js/main.js')
         .transform(babelify)
-        .transform(envify({_: 'purge'}))
+        .transform(envify(env))
         .bundle()
         .pipe(source('bundle.js'))
         .pipe(buffer())
