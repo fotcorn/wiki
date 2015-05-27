@@ -8,6 +8,7 @@ var uglify = require('gulp-uglify');
 var less = require('gulp-less');
 var RevAll = require('gulp-rev-all');
 var del = require('del');
+var merge = require('merge-stream');
 
 
 gulp.task('javascript', ['clean'], function() {
@@ -24,15 +25,26 @@ gulp.task('javascript', ['clean'], function() {
 gulp.task('less', ['clean'], function() {
     return gulp.src('./css/main.less')
         .pipe(less())
-        .pipe(gulp.dest('./dist/css'));
+        .pipe(gulp.dest('./dist/css/'));
 });
 
-gulp.task('rev', ['javascript', 'less'], function() {
-    var revAll = new RevAll({dontRenameFile: [/^\/index.html/g]});
-    return gulp.src('dist/**')
-        .pipe(revAll.revision())
-        .pipe(gulp.dest('cdn'));
+gulp.task('copy', ['clean'], function() {
+    var indexHtml = gulp.src('./index.html').pipe(gulp.dest('./dist/'));
+
+    var robotoFont = gulp.src('./node_modules/roboto-font/fonts/**/*').pipe(gulp.dest('./dist/fonts/'));
+
+    return merge(indexHtml, robotoFont);
+
 });
+
+gulp.task('rev', ['javascript', 'less', 'copy'], function() {
+    var revAll = new RevAll({dontRenameFile: [/^\/index.html/g]});
+    return gulp.src('./dist/**')
+        .pipe(revAll.revision())
+        .pipe(gulp.dest('./cdn/'));
+});
+
+
 
 gulp.task('clean', function(cb) {
     del([
