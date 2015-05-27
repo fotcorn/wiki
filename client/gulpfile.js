@@ -29,7 +29,7 @@ gulp.task('less', ['clean'], function() {
 
 gulp.task('rev', ['javascript', 'less'], function() {
     var revAll = new RevAll({dontRenameFile: [/^\/index.html/g]});
-    gulp.src('dist/**')
+    return gulp.src('dist/**')
         .pipe(revAll.revision())
         .pipe(gulp.dest('cdn'));
 });
