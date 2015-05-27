@@ -7,9 +7,10 @@ var buffer = require('vinyl-buffer');
 var uglify = require('gulp-uglify');
 var less = require('gulp-less');
 var RevAll = require('gulp-rev-all');
+var del = require('del');
 
 
-gulp.task('javascript', function () {
+gulp.task('javascript', ['clean'], function() {
     return browserify('./js/main.js')
         .transform(babelify)
         .transform(envify({_: 'purge'}))
@@ -20,18 +21,24 @@ gulp.task('javascript', function () {
         .pipe(gulp.dest('./dist/'));
 });
 
-gulp.task('less', function() {
+gulp.task('less', ['clean'], function() {
     return gulp.src('./css/main.less')
         .pipe(less())
         .pipe(gulp.dest('./dist/css'));
 });
 
-gulp.task('rev', function () {
+gulp.task('rev', ['javascript', 'less'], function() {
     var revAll = new RevAll({dontRenameFile: [/^\/index.html/g]});
     gulp.src('dist/**')
         .pipe(revAll.revision())
         .pipe(gulp.dest('cdn'));
 });
 
+gulp.task('clean', function(cb) {
+    del([
+        './dist/',
+        './cdn/'
+    ], cb);
+});
 
-gulp.task('default', ['javascript', 'less', 'rev']);
+gulp.task('default', ['clean', 'javascript', 'less', 'rev']);
