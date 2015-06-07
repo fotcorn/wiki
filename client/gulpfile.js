@@ -9,6 +9,7 @@ var less = require('gulp-less');
 var RevAll = require('gulp-rev-all');
 var del = require('del');
 var merge = require('merge-stream');
+var fs = require('fs');
 
 
 gulp.task('javascript', ['clean'], function() {
@@ -40,13 +41,15 @@ gulp.task('copy', ['clean'], function() {
 });
 
 gulp.task('rev', ['javascript', 'less', 'copy'], function() {
-    var revAll = new RevAll({dontRenameFile: [/^\/index.html/g]});
+    var revAll = new RevAll({dontRenameFile: [/^\/index.html/g], prefix: '/static/'});
     return gulp.src('./dist/**')
         .pipe(revAll.revision())
-        .pipe(gulp.dest('./cdn/'));
+        .pipe(gulp.dest('./cdn/static/'));
 });
 
-
+gulp.task('move', ['rev'], function(cb) {
+    fs.rename('./cdn/static/index.html', './cdn/index.html', cb);
+});
 
 gulp.task('clean', function(cb) {
     del([
@@ -55,4 +58,4 @@ gulp.task('clean', function(cb) {
     ], cb);
 });
 
-gulp.task('default', ['clean', 'javascript', 'less', 'rev']);
+gulp.task('default', ['clean', 'javascript', 'less', 'rev', 'move']);
