@@ -64,11 +64,14 @@ export var WikiPage = React.createClass({
         }
         return <div>
             <h1 id="page-title">{this.state.title} - {dirty}</h1>
-            <div className="main-container">
-                <WikiContent content={this.state.html} />
-            </div>
-            <div className="main-container">
-                <WikiEditor markdown={this.state.markdown} onChange={this.update} onSave={this.save} />
+            <div className="main">
+                <div className="main-container">
+                    <WikiContent content={this.state.html} />
+                </div>
+                <div className="main-container">
+                    <WikiEditor markdown={this.state.markdown} onChange={this.update} onSave={this.save} />
+                </div>
+                <div style={{clear: 'both'}}></div>
             </div>
         </div>
     },

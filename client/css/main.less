@@ -11,15 +11,23 @@
   line-height: 33px;
 }
 
-.main-container {
-  width: 50%;
-  float: left;
+.main {
+  display: flex;
+  .main-container {
+    width: 50%;
+    float: left;
+    flex: 1;
+    .mui-paper.mui-z-depth-1 > .mui-z-depth-bottom {
+      box-shadow: none;
+    }
+  }
 }
 
 #editor {
+  min-height: 100%;
   margin: 10px;
   .mui-paper-container {
-    padding: 14px 20px 20px 20px;
+    padding: 14px 20px 0 20px;
     .CodeMirror {
       height: auto;
     }
@@ -27,11 +35,12 @@
 }
 
 #text {
+  min-height: 100%;
   margin: 10px 0 10px 10px;
   font-size: 14px;
   word-break: break-all;
   div {
-    padding: 7px 10px 10px 10px;
+    padding: 7px 10px 0 10px;
   }
   li {
     margin-left: 15px;
