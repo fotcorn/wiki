@@ -38,6 +38,7 @@ var CodeMirrorEditor = React.createClass({
 
   componentDidMount: function() {
     var isTextArea = this.props.forceTextArea || IS_MOBILE;
+    this.props.lineWrapping = true;
     if (!isTextArea) {
       this.editor = CodeMirror.fromTextArea(this.refs.editor.getDOMNode(), this.props);
       this.editor.on('change', this.handleChange);
