@@ -91,6 +91,7 @@ export var WikiPage = React.createClass({
                 data.text = '';
             }
             this.setState({markdown: data.text, title: this.getParams().page, dirty: false});
+            md.context = {current_page: this.getParams().page};
             this.renderMarkdown(data.text);
         });
     },

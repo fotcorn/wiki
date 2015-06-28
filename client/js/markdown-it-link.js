@@ -46,6 +46,10 @@ function linkify(state, silent) {
     return false;
   }
 
+  if (content.charAt(0) == ':') {
+    content = state.md.context.current_page + content;
+  }
+
   // found!
   state.posMax = state.pos;
   state.pos = start + 1;
