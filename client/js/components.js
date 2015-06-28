@@ -86,12 +86,14 @@ export var WikiPage = React.createClass({
         if (this.interval == null) {
             window.setInterval(() => this.save() , 2000);
         }
-        $.get(config.apiUrl + '/pages/' + this.getParams().page + '/', data => {
+        let pageName = this.getParams().page;
+        $.get(config.apiUrl + '/pages/' + pageName + '/', data => {
             if (data.text == null) {
                 data.text = '';
             }
-            this.setState({markdown: data.text, title: this.getParams().page, dirty: false});
-            md.context = {current_page: this.getParams().page};
+            this.setState({markdown: data.text, title: pageName, dirty: false});
+            md.context = {current_page: pageName};
+            $('title').html(pageName + ' - stormnotes.io');
             this.renderMarkdown(data.text);
         });
     },
