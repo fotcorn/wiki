@@ -36,7 +36,9 @@ gulp.task('copy', ['clean'], function() {
 
     var robotoFont = gulp.src('./node_modules/roboto-font/fonts/**/*').pipe(gulp.dest('./dist/fonts/'));
 
-    return merge(indexHtml, robotoFont);
+    var images = gulp.src('./img/**/*').pipe(gulp.dest('./dist/img/'));
+
+    return merge(indexHtml, robotoFont, images);
 
 });
 
