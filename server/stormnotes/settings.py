@@ -4,7 +4,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = '@v%jtvz^m+2ura0epp18ld^67bxs(9c5!-33213qs6s6f4+_$7'
 
-DEBUG = True
+SYSTEM = 'development'
+if os.environ.get('STORMNOTES_PRODUCTION'):
+    SYSTEM = 'production'
+
+DEBUG = not SYSTEM == 'production'
 
 ALLOWED_HOSTS = []
 
