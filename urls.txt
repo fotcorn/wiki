@@ -1,0 +1,5 @@
+/wiki/*         client/index.html
+/account/*      Django App
+/api/*          Django App
+/static/*       Client Static
+/authstatic/*   Django Static Files
