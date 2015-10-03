@@ -1,6 +1,6 @@
 import json
 from django.http.response import JsonResponse, HttpResponseForbidden
-from stormnotes.redis_store import RedisStore
+from .redis_store import RedisStore
 
 r = RedisStore()
 
