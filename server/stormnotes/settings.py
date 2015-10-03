@@ -76,3 +76,4 @@ USE_TZ = True
 STATIC_URL = '/authstatic/'
 
 AUTH_USER_MODEL = 'account.User'
+LOGIN_REDIRECT_URL = '/wiki/index'
