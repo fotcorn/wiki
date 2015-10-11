@@ -95,6 +95,8 @@ export var WikiPage = React.createClass({
             md.context = {current_page: pageName};
             $('title').html(pageName + ' - stormnotes.io');
             this.renderMarkdown(data.text);
+        }).fail(function() {
+            window.location = '/account/login/?next=' + encodeURIComponent(window.location.pathname);
         });
     },
     save() {
@@ -104,6 +106,8 @@ export var WikiPage = React.createClass({
                 url: config.apiUrl + '/pages/' + this.getParams().page + '/',
                 data: JSON.stringify({'text': this.state.markdown}),
                 contentType: 'application/json'
+            }).fail(function() {
+                window.location = '/account/login/?next=' + encodeURIComponent(window.location.pathname);
             });
             this.setState({dirty: false});
         }
