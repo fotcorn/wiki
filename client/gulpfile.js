@@ -22,35 +22,30 @@ gulp.task('javascript', ['clean'], function() {
         .pipe(source('bundle.js'))
         .pipe(buffer())
         .pipe(uglify())
-        .pipe(gulp.dest('./dist/'));
+        .pipe(gulp.dest('./dist/static/'));
 });
 
 gulp.task('less', ['clean'], function() {
     return gulp.src('./css/main.less')
         .pipe(less())
-        .pipe(gulp.dest('./dist/css/'));
+        .pipe(gulp.dest('./dist/static/css/'));
 });
 
 gulp.task('copy', ['clean'], function() {
     var indexHtml = gulp.src('./index.html').pipe(gulp.dest('./dist/'));
 
-    var robotoFont = gulp.src('./node_modules/roboto-font/fonts/**/*').pipe(gulp.dest('./dist/fonts/'));
+    var robotoFont = gulp.src('./node_modules/roboto-font/fonts/**/*').pipe(gulp.dest('./dist/static/fonts/'));
 
-    var images = gulp.src('./img/**/*').pipe(gulp.dest('./dist/img/'));
+    var images = gulp.src('./img/**/*').pipe(gulp.dest('./dist/static/img/'));
 
     return merge(indexHtml, robotoFont, images);
-
 });
 
 gulp.task('rev', ['javascript', 'less', 'copy'], function() {
-    var revAll = new RevAll({dontRenameFile: [/^\/index.html/g], prefix: '/static/'});
+    var revAll = new RevAll({dontRenameFile: [/^\/index.html/g]});
     return gulp.src('./dist/**')
         .pipe(revAll.revision())
-        .pipe(gulp.dest('./cdn/static/'));
-});
-
-gulp.task('move', ['rev'], function(cb) {
-    fs.rename('./cdn/static/index.html', './cdn/index.html', cb);
+        .pipe(gulp.dest('./cdn/'));
 });
 
 gulp.task('clean', function(cb) {
@@ -60,4 +55,4 @@ gulp.task('clean', function(cb) {
     ], cb);
 });
 
-gulp.task('default', ['clean', 'javascript', 'less', 'rev', 'move']);
+gulp.task('default', ['clean', 'javascript', 'less', 'rev']);
