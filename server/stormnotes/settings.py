@@ -3,15 +3,18 @@ import dj_database_url
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = '@v%jtvz^m+2ura0epp18ld^67bxs(9c5!-33213qs6s6f4+_$7'
-
 SYSTEM = 'development'
 if os.environ.get('STORMNOTES_PRODUCTION'):
     SYSTEM = 'production'
 
-DEBUG = not SYSTEM == 'production'
-
-ALLOWED_HOSTS = []
+if SYSTEM == 'production':
+    DEBUG = False
+    ALLOWED_HOSTS = [os.environ['STORMNOTES_ALLOWED_HOST']]
+    SECRET_KEY = os.environ['STORMNOTES_SECRET_KEY']
+else:
+    DEBUG = True
+    ALLOWED_HOSTS = []
+    SECRET_KEY = '@v%jtvz^m+2ura0epp18ld^67bxs(9c5!-33213qs6s6f4+_$7'
 
 INSTALLED_APPS = (
     'django.contrib.auth',
