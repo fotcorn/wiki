@@ -13,7 +13,7 @@ def page(request, page_name):
 
     if request.method == 'POST':
         data = json.loads(request.body)
-        r.set_page(request.user.email, page_name, data['text'])
+        r.set_page(request.user.pk, page_name, data['text'])
         return JsonResponse({'status': 'ok'})
     else:
-        return JsonResponse({'text': r.get_page(request.user.email, page_name)})
+        return JsonResponse({'text': r.get_page(request.user.pk, page_name)})
