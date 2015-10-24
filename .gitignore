@@ -7,7 +7,11 @@ TODO
 *.iml
 venv/
 *.pyc
+*.pyo
 production.js
 dist/
 cdn/
-
+venv/
+db.sqlite3
+.ipynb_checkpoints/
+*.ipynb
