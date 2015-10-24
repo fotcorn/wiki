@@ -65,10 +65,10 @@ export var WikiPage = React.createClass({
         return <div>
             <h1 id="page-title">{this.state.title} - {dirty}</h1>
             <div className="main">
-                <div className="main-container">
+                <div className="main-container left">
                     <WikiContent content={this.state.html} />
                 </div>
-                <div className="main-container">
+                <div className="main-container right">
                     <WikiEditor markdown={this.state.markdown} onChange={this.update} onSave={this.save} />
                 </div>
                 <div style={{clear: 'both'}}></div>
