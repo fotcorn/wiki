@@ -11,13 +11,16 @@ var md = require('markdown-it')({breaks: true, linkify: true})
     .use(require('./markdown-it-checkbox'))
     .use(require('./markdown-it-link'));
 
-
 var WikiContent = React.createClass({
     mixins: [Router.Navigation],
-    componentDidMount() {
-        window.wikiTransitionToPage = (page) => {
-            this.transitionTo('wiki_page', {page: page});
-        };
+
+    componentDidUpdate() {
+        var wikiContent = this;
+        $('.wiki-page-link').on('click', function() {
+            var page = $(this).data('wiki-page');
+            wikiContent.transitionTo('wiki_page', {page: page});
+            return false;
+        });
     },
     render() {
         return <Paper zDepth={1} id="text">
